@@ -51,8 +51,6 @@ export default class AddFolder extends React.Component {
             .then(res => res.json())
             .then((data) => { this.context.handleAddFolder(data) })
             .then(() => this.props.history.push('/'))
-            .catch(error => this.context.updateError(error.message));
-
     }
 
     validateFolderName = () => {

@@ -11,6 +11,7 @@ import './App.css';
 
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
+import ErrorBoundary from '../ErrorBoundary';
 
 class App extends Component {
     state = {
@@ -18,7 +19,7 @@ class App extends Component {
         folders: []
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         Promise.all([
             fetch(`${config.API_ENDPOINT}/notes`),
             fetch(`${config.API_ENDPOINT}/folders`)
@@ -106,18 +107,24 @@ class App extends Component {
         return (
             <ApiContext.Provider value={value}>
                 <div className="App">
-                    
+
+                   <ErrorBoundary>
                     <nav className="App__nav">{this.renderNavRoutes()}</nav>
-                    
+                   </ErrorBoundary> 
+
+                   <ErrorBoundary>
                     <header className="App__header">
                         <h1>
                             <Link to="/">Noteful</Link>{' '}
                             <FontAwesomeIcon icon="check-double" />
                         </h1>
                     </header>
+                    </ErrorBoundary>
 
+                   <ErrorBoundary>
                     <main className="App__main">{this.renderMainRoutes()}</main>
-                
+                    </ErrorBoundary>
+                    
                 </div>
             </ApiContext.Provider>
         );
