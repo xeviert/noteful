@@ -49,6 +49,7 @@ export default class AddFolder extends React.Component {
 
         fetch(URL, options)
             .then(res => res.json())
+            .then((data) => console.log(data))
             .then((data) => { this.context.handleAddFolder(data) })
             .then(() => this.props.history.push('/'))
     }

@@ -7,8 +7,12 @@ const ApiContext = React.createContext({
   updateError: () => {},
   handleAddFolder: () => {},
   handleNoteFolder: () => {},
-  "folders": [],
-  "notes": []
+  folders: [],
+  notes: [],
+  addNote: () => {},
+  deleteNote: () => {},
+  addFolder: () => {},
+  deleteFolder: () => {},
 })
 
 export default ApiContext

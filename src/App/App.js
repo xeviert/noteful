@@ -21,8 +21,8 @@ class App extends Component {
 
     componentDidMount = () => {
         Promise.all([
-            fetch(`${config.API_ENDPOINT}/notes`),
-            fetch(`${config.API_ENDPOINT}/folders`)
+            fetch(`http://localhost:9090/notes`),
+            fetch(`http://localhost:9090/folders`)
         ])
             .then(([notesRes, foldersRes]) => {
                 if (!notesRes.ok)
@@ -30,7 +30,10 @@ class App extends Component {
                 if (!foldersRes.ok)
                     return foldersRes.json().then(e => Promise.reject(e));
 
-                return Promise.all([notesRes.json(), foldersRes.json()]);
+                return Promise.all([
+                    notesRes.json(), 
+                    foldersRes.json(),
+                ]);
             })
             .then(([notes, folders]) => {
                 this.setState({notes, folders});
@@ -40,7 +43,13 @@ class App extends Component {
             });
     }
 
-    handleDeleteNote = noteId => {
+    handleDeleteFolder = folderId => {
+        this.setState({
+            folders: this.state.folders.filter(folder => folder.id!== folderId)
+        })
+    }
+
+    handleDeleteNote = (noteId) => {
         this.setState({
             notes: this.state.notes.filter(note => note.id !== noteId)
         });
@@ -100,6 +109,7 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
+            deleteFolder: this.handleDeleteFolder,
             deleteNote: this.handleDeleteNote,
             addFolder: this.handleAddFolder,
             addNote: this.handleAddNote
