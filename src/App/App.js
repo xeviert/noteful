@@ -20,9 +20,11 @@ class App extends Component {
     };
 
     componentDidMount = () => {
+        console.log('this thing is not working');
+
         Promise.all([
-            fetch(`http://localhost:9090/notes`),
-            fetch(`http://localhost:9090/folders`)
+            fetch(`${config.API_ENDPOINT}/notes`),
+            fetch(`${config.API_ENDPOINT}/folders`)
         ])
             .then(([notesRes, foldersRes]) => {
                 if (!notesRes.ok)
@@ -30,10 +32,7 @@ class App extends Component {
                 if (!foldersRes.ok)
                     return foldersRes.json().then(e => Promise.reject(e));
 
-                return Promise.all([
-                    notesRes.json(), 
-                    foldersRes.json(),
-                ]);
+                return Promise.all([notesRes.json(), foldersRes.json()]);
             })
             .then(([notes, folders]) => {
                 this.setState({notes, folders});
@@ -41,12 +40,6 @@ class App extends Component {
             .catch(error => {
                 console.error({error});
             });
-    }
-
-    handleDeleteFolder = folderId => {
-        this.setState({
-            folders: this.state.folders.filter(folder => folder.id!== folderId)
-        })
     }
 
     handleDeleteNote = (noteId) => {
@@ -109,10 +102,9 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteFolder: this.handleDeleteFolder,
-            deleteNote: this.handleDeleteNote,
-            addFolder: this.handleAddFolder,
-            addNote: this.handleAddNote
+            handleDeleteNote: this.handleDeleteNote,
+            handleAddFolder: this.handleAddFolder,
+            handleAddNote: this.handleAddNote
         };
         return (
             <ApiContext.Provider value={value}>

@@ -1,6 +1,7 @@
 import React from "react";
 import ApiContext from '../ApiContext';
 import ValidateError from '../ValidateError';
+import config from '../config';
 import PropTypes from 'prop-types';
 
 import '../AddFolder/AddFolder.css';
@@ -35,23 +36,22 @@ export default class AddFolder extends React.Component {
     handleAddFolder = (e) => {
         e.preventDefault();
 
-        let newFolder = JSON.stringify(this.state);
+        const foldername = this.state.folderName.value;
 
-        const options = {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: newFolder
-        }
-
-        const URL = 'http://localhost:9090/folders/';
-
-        fetch(URL, options)
+        fetch(`${config.API_ENDPOINT}/folders`, {
+            
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify({ name: foldername }),
+        })
             .then(res => res.json())
-            .then((data) => console.log(data))
-            .then((data) => { this.context.handleAddFolder(data) })
-            .then(() => this.props.history.push('/'))
+            .then((data) => { 
+                this.context.handleAddFolder(data);
+                this.props.history.push('/');
+             })
+            .catch((error) => console.error('errorrrrr', error))
     }
 
     validateFolderName = () => {

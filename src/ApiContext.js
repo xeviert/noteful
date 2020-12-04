@@ -1,18 +1,14 @@
 import React from 'react'
 
 const ApiContext = React.createContext({
-  handleDelete: () => {},
+  handleDeleteNote: () => {},
   updateMessage: () => {},
   clearMessage: () => {},
   updateError: () => {},
   handleAddFolder: () => {},
-  handleNoteFolder: () => {},
+  handleAddNote: () => {},
   folders: [],
-  notes: [],
-  addNote: () => {},
-  deleteNote: () => {},
-  addFolder: () => {},
-  deleteFolder: () => {},
+  notes: []
 })
 
 export default ApiContext
