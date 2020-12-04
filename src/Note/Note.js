@@ -1,41 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ApiContext from '../ApiContext'
-import config from '../config'
-import './Note.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ApiContext from '../ApiContext';
+import config from '../config';
+import './Note.css';
+import PropTypes from 'prop-types';
+
 
 export default class Note extends React.Component {
-  static defaultProps ={
+  static defaultProps = {
     onDeleteNote: () => {},
-  }
+  };
   static contextType = ApiContext;
 
-  handleClickDelete = e => {
-    e.preventDefault()
-    const noteId = this.props.id
+  handleClickDelete = (e) => {
+    e.preventDefault();
+    const noteId = this.props.id;
 
     fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
     })
-      .then(res => {
-        if (!res.ok)
-          return res.json().then(e => Promise.reject(e))
-        return res.json()
+      .then((res) => {
+        if (!res.ok) 
+        return res.json().then((e) => Promise.reject(e));
+        return res.json();
       })
       .then(() => {
-        this.context.deleteNote(noteId)
-        // allow parent to perform extra behaviour
-        this.props.onDeleteNote(noteId)
+        this.context.handleDeleteNote(noteId);
+        // this allows parent to perform extra behaviour
+        this.props.onDeleteNote(noteId);
       })
-      .catch(error => {
-        console.error({ error })
-      })
-  }
+      .catch((error) => {
+        console.error({ error });
+      });
+  };
 
   render() {
     const { name, id, modified } = this.props
@@ -60,7 +62,7 @@ export default class Note extends React.Component {
             Modified
             {' '}
             <span className='Date'>
-              {format(modified, 'Do MMM YYYY')}
+              {format(modified, 'ddd, MMM Do YYYY')}
             </span>
           </div>
         </div>
@@ -68,3 +70,10 @@ export default class Note extends React.Component {
     )
   }
 }
+
+Note.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  onDeleteNote: PropTypes.func,
+  modified: PropTypes.string,
+};

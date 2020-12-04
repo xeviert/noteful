@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 import './AddNote.css';
 
 export default class AddNote extends React.Component {
-    static contextType = ApiContext;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +19,8 @@ export default class AddNote extends React.Component {
           folderId: " ",
         }
     }
+
+    static contextType = ApiContext;
 
     static propTypes = {
         history: PropTypes.object.isRequired
@@ -47,8 +47,21 @@ export default class AddNote extends React.Component {
     handleAddNote = (e) => {
         e.preventDefault();
 
-        const { touched, ...rest } = this.state
-        let newNote = JSON.stringify(rest);
+        // const { touched, ...rest } = this.state
+        // let newNote = JSON.stringify(rest);
+        const noteName = this.state.noteName.value;
+        const content = this.state.content.value;
+        const folderId = e.currentTarget.querySelector('select').value;
+        const modified = new Date();
+        // 
+        const obj = {
+            name: noteName,
+            content,
+            folderId,
+            modified,
+        }
+
+        const newNote = JSON.stringify(obj);
 
         const options = {
             method: 'POST',
@@ -60,8 +73,10 @@ export default class AddNote extends React.Component {
 
         fetch('http://localhost:9090/notes', options)
             .then(res => res.json())
-            .then((data) => { this.context.handleAddNote(data) })
-            .then(() => this.props.history.push('/'))
+            .then((data) => { 
+                this.context.handleAddNote(data);
+                this.props.history.push('/'); 
+            })
     }
 
     folderChoice = () => {
