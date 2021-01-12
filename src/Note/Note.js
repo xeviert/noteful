@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './Note.css';
-import PropTypes from 'prop-types';
 
 
 export default class Note extends React.Component {
@@ -24,7 +23,7 @@ export default class Note extends React.Component {
         "content-type": "application/json",
       },
     })
-      .then((res) => {
+      .then(res => {
         if (!res.ok) 
         return res.json().then((e) => Promise.reject(e));
         return res.json();
@@ -40,12 +39,11 @@ export default class Note extends React.Component {
   };
 
   render() {
-    const { name, id, modified } = this.props
     return (
       <div className='Note'>
         <h2 className='Note__title'>
-          <Link to={`/note/${id}`}>
-            {name}
+          <Link to={`/note/${this.props.id}`}>
+            {this.props.title}
           </Link>
         </h2>
         <button
@@ -71,9 +69,9 @@ export default class Note extends React.Component {
   }
 }
 
-Note.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  onDeleteNote: PropTypes.func,
-  modified: PropTypes.string,
-};
+// Note.propTypes = {
+//   id: PropTypes.string,
+//   name: PropTypes.string,
+//   onDeleteNote: PropTypes.func,
+//   modified: PropTypes.string,
+// };
