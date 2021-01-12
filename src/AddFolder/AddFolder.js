@@ -36,7 +36,8 @@ export default class AddFolder extends React.Component {
     handleAddFolder = (e) => {
         e.preventDefault();
 
-        const foldername = this.state.folderName.value;
+        const foldername = {
+            name: e.target['folder-name'].value};
 
         fetch(`${config.API_ENDPOINT}/folders`, {
             

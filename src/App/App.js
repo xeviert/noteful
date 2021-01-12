@@ -19,7 +19,6 @@ class App extends Component {
     };
 
     componentDidMount = () => {
-        console.log('this thing is not working');
 
         Promise.all([
             fetch(`${config.API_ENDPOINT}/notes`),
