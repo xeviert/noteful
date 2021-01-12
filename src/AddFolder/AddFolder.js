@@ -2,7 +2,6 @@ import React from "react";
 import ApiContext from '../ApiContext';
 import ValidateError from '../ValidateError';
 import config from '../config';
-import PropTypes from 'prop-types';
 import NotefulForm from '../NotefulForm/NotefulForm'
 
 import '../AddFolder/AddFolder.css';
