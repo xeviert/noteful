@@ -1,7 +1,6 @@
 import React from "react";
 import ApiContext from "../ApiContext";
 import NotefulForm from '../NotefulForm/NotefulForm'
-import ValidateError from "../ValidateError";
 import config from '../config'
 import './AddNote.css';
 

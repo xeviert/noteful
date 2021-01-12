@@ -26,7 +26,7 @@ class App extends Component {
         ])
             .then(([notesRes, foldersRes]) => {
                 if (!notesRes.ok)
-                    return notesRes.json().then(e => Promise.reject(e));
+                    return notesRes.json().then((e) => Promise.reject(e));
                 if (!foldersRes.ok)
                     return foldersRes.json().then(e => Promise.reject(e));
 

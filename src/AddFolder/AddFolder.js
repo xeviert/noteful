@@ -1,6 +1,5 @@
 import React from "react";
 import ApiContext from '../ApiContext';
-import ValidateError from '../ValidateError';
 import config from '../config';
 import NotefulForm from '../NotefulForm/NotefulForm'
 
@@ -47,7 +46,7 @@ export default class AddFolder extends React.Component {
             .then(res => res.json())
             .then((data) => { 
                 this.context.handleAddFolder(data);
-                this.props.history.push(`/folder/${folder.id}`);
+                this.props.history.push(`/folders/${folder.id}`);
              })
             .catch((error) => console.error('errorrrrr', error))
     }
