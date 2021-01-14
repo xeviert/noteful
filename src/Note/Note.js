@@ -13,7 +13,7 @@ export default class Note extends React.Component {
   };
   static contextType = ApiContext;
 
-  handleClickDelete = (e) => {
+  handleClickDelete = e => {
     e.preventDefault();
     const noteId = this.props.id;
 
@@ -23,14 +23,14 @@ export default class Note extends React.Component {
         "content-type": "application/json",
       },
     })
-      .then(res => {
+      .then((res) => {
         if (!res.ok) 
         return res.json().then((e) => Promise.reject(e));
-        return res.json();
+        return res
       })
       .then(() => {
         this.context.handleDeleteNote(noteId);
-        // this allows parent to perform extra behaviour
+
         this.props.onDeleteNote(noteId);
       })
       .catch((error) => {
@@ -39,11 +39,12 @@ export default class Note extends React.Component {
   };
 
   render() {
+    const { title, id, modified } = this.props
     return (
       <div className='Note'>
         <h2 className='Note__title'>
-          <Link to={`/note/${this.props.id}`}>
-            {this.props.title}
+          <Link to={`/note/${id}`}>
+            {title}
           </Link>
         </h2>
         <button
@@ -60,7 +61,7 @@ export default class Note extends React.Component {
             Modified
             {' '}
             <span className='Date'>
-              {format(this.props.modified, 'ddd, MMM Do YYYY')}
+              {format(modified, 'ddd, MMM Do YYYY')}
             </span>
           </div>
         </div>

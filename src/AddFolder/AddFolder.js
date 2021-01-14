@@ -17,19 +17,6 @@ export default class AddFolder extends React.Component {
 
     static contextType = ApiContext;
 
-    // updateFolder = (foldername) => {
-    //     this.setState({
-    //         folderName: {
-    //             value: foldername,
-    //             touched: true
-    //         }
-    //     })
-    // }
-
-    // static propTypes = {
-    //     history: PropTypes.object.isRequired
-    // }
-
     handleAddFolder = (e) => {
         e.preventDefault();
 
@@ -61,7 +48,7 @@ export default class AddFolder extends React.Component {
                 <label htmlFor='folder-name-input'>
                   Name
                 </label>
-                <input type='text' id='folder-name-input' name='folder-name' />
+                <input type='text' id='folder-name-input' title='folder-name' />
               </div>
               <div className='buttons'>
                 <button type='submit'>
