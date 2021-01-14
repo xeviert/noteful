@@ -17,7 +17,7 @@ export default class AddFolder extends React.Component {
 
     static contextType = ApiContext;
 
-    handleAddFolder = (e) => {
+    handleAddFolder = e => {
         e.preventDefault();
 
         const folder = {title: e.target['folder-name'].value}
@@ -33,7 +33,7 @@ export default class AddFolder extends React.Component {
             .then(res => res.json())
             .then((data) => { 
                 this.context.handleAddFolder(data);
-                this.props.history.push(`/folders/${folder.id}`);
+                this.props.history.push(`/folder/${folder.id}`);
              })
             .catch((error) => console.error('errorrrrr', error))
     }
@@ -48,7 +48,7 @@ export default class AddFolder extends React.Component {
                 <label htmlFor='folder-name-input'>
                   Name
                 </label>
-                <input type='text' id='folder-name-input' title='folder-name' />
+                <input type='text' id='folder-name-input' name='folder-name' />
               </div>
               <div className='buttons'>
                 <button type='submit'>
